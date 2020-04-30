@@ -1,2 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>ssssnake</title><style>body{padding-top:20px;margin-top:0;text-align:center;background-color:#5f9ea0;overflow:hidden}canvas{border:5px solid #000;box-shadow:0 0 10px gray}span{margin:20px;font-weight:bolder;float:left}div{display:none}@media screen and (max-width:600px){body{height:750}#stop{padding-left:25px}canvas{width:300px;height:380px}div{display:block;margin-top:15px}button{width:70px;height:70px;border:5px solid #000;border-radius:15px;outline:0}#btn1,#btn2{margin:auto}#btn3,#btn4{margin:8px;margin-left:35px;margin-right:35px}}</style></head><body onload="draw()"><span id="stop">STOP</span> <span id="restart">RESTART</span> <span id="score"></span><canvas id="canvas" width="800" height="600">你的浏览器需要更新~</canvas><div><button id="btn1">👆</button><br><button id="btn3">👈</button> <button id="btn4">👉</button><br><button id="btn2">👇</button></div><script>function draw(){var n=document.getElementById("canvas");if(n.getContext){var i,r,t=n.getContext("2d"),h=!1,e="RUN",a=0,o=document.getElementById("score");o.innerHTML="SCORE: "+a;a=0;var d=document.getElementById("btn1"),c=document.getElementById("btn2"),s=document.getElementById("btn3"),l=document.getElementById("btn4"),u=document.getElementById("stop"),y=document.getElementById("restart");function w(t,e,i,h,n){this.x=t,this.y=e,this.width=i,this.height=h,this.color=n}function f(){this.head=new w(n.width/2-20,n.height/2-20,20,20,"red"),this.body=new Array;for(var t=this.head.x-20,e=this.head.y,i=0;i<3;i++){var h=new w(t,e,20,20,"black");this.body.push(h),t-=20}this.direction=2,r="R"}w.prototype.rDraw=function(){t.beginPath(),t.fillStyle=this.color,t.fillRect(this.x,this.y,this.width,this.height),t.strokeRect(this.x,this.y,this.width,this.height)},f.prototype.sDraw=function(){this.head.rDraw();for(var t=0;t<this.body.length;t++)this.body[t].rDraw()};var g=new f;g.sDraw();var m=k();function v(){t.clearRect(0,0,n.width,n.height),m.rDraw(),g.move(),g.sDraw(),b(g.head,m)&&(h=!0,m=k(),a+=1,o.innerHTML="SCORE: "+a)}f.prototype.move=function(){var t=new w(this.head.x,this.head.y,this.head.width,this.head.height,"black");switch(this.body.splice(0,0,t),0==h?this.body.pop():h=!1,this.direction){case 0:this.head.x-=this.head.width,r="L";break;case 1:this.head.y-=this.head.height,r="U";break;case 2:this.head.x+=this.head.width,r="R";break;case 3:this.head.y+=this.head.height,r="D"}(this.head.x>=n.width||this.head.x<0||this.head.y>=n.height||this.head.y<0)&&(clearInterval(i),i=null,alert("Game over:D"));for(var e=0;e<this.body.length;e++)b(this.head,this.body[e])&&(clearInterval(i),i=null,alert("Game over:D"))};function b(t,e){var i=t.x,h=e.x,n=t.y,r=e.y,a=t.x+t.width,o=e.x+e.width,d=t.y+t.height,c=e.y+e.height,s=Math.max(i,h),l=Math.max(n,r),u=Math.min(a,o),y=Math.min(d,c);return s<u&&l<y}function k(){for(var t=!0;t;){var e=new w(40*x(0,(n.width-40)/40),40*x(0,(n.height-40)/40),20,20,"green");b(g.head,e)&&(t=!0,contiue),t=!1;for(var i=0;i<g.body.length;i++)if(b(g.body[i],e)){t=!0;break}}return e}function x(t,e){return Math.round(Math.random()*(e-t)+t)}i=setInterval(v,200),document.onkeydown=function(t){switch((t=t||windw.event).keyCode){case 37:if("R"==r)return!1;g.direction=0;break;case 38:if("D"==r)return!1;g.direction=1;break;case 39:if("L"==r)return!1;g.direction=2;break;case 40:if("U"==r)return!1;g.direction=3}},d.onclick=function(){return"D"!=r&&(g.direction=1),!1},c.onclick=function(){return"U"!=r&&(g.direction=3),!1},s.onclick=function(){return"R"!=r&&(g.direction=0),!1},l.onclick=function(){return"L"!=r&&(g.direction=2),!1},u.onclick=function(){"RUN"==e&&(clearInterval(i),e="STOP")},y.onclick=function(){"STOP"==e&&(i=setInterval(v,200),e="RUN")}}}</script></body></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>ssssnake</title>
+    <style>
+        body {
+            padding-top: 20px;
+            margin-top: 0;
+            text-align: center;
+            background-color: cadetblue;
+            /*background-color: #879372;*/
+            overflow: hidden;
+        }
+
+        canvas {
+            border: 5px solid black;
+            box-shadow: 0 0 10px gray;
+        }
+
+        span {
+            margin: 20px;
+            font-weight: bolder;
+            float: left;
+        }
+
+        /*button{
+            width: 40px;
+            height: 50px;
+        }
+        div{
+            display: inline;
+            vertical-align: bottom;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100px;
+            margin-top: 20px;
+        }
+        #btn1,#btn2{
+            float: left;
+        }
+        #btn1{
+            margin-left: 70px;
+        }
+        #btn3,#btn4{
+            float: right;
+        }
+        #btn4{
+            margin-right: 70px;
+        }*/
+        div {
+            display: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                height: 750;
+            }
+
+            #stop {
+                padding-left: 25px;
+            }
+
+            canvas {
+                width: 300px;
+                height: 380px;
+            }
+
+            div {
+                display: block;
+                margin-top: 15px;
+            }
+
+            button {
+                width: 70px;
+                height: 70px;
+                border: 5px solid black;
+                border-radius: 15px;
+                outline: none;
+            }
+
+            #btn1,
+            #btn2 {
+                margin: auto;
+            }
+
+            #btn3,
+            #btn4 {
+                margin: 8px;
+                margin-left: 35px;
+                margin-right: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body onload="draw()">
+    <span id="stop">STOP</span>
+    <span id="restart">RESTART</span>
+    <span id="score"></span>
+    <canvas id="canvas" width=800 height=600>
+        你的浏览器需要更新~
+    </canvas>
+    <div>
+        <button id="btn1">👆</button><br>
+        <button id="btn3">👈</button>
+        <button id="btn4">👉</button><br>
+        <button id="btn2">👇</button>
+    </div>
+    <script>
+        function draw() {
+            var canvas = document.getElementById("canvas");
+
+            if (canvas.getContext) {
+                var ctx = canvas.getContext("2d");
+                var isEatFood = false;
+                var timer;      //定时器
+                var old_dir;    //定义一个代表原方向的变量，当开关发生变化，原方向跟着变化，然后进行检测，如果原方向与新方向相同，就返回false
+                var runing = "RUN";
+
+                //分数
+                var score = 0;
+                var scorez = document.getElementById("score");
+                scorez.innerHTML = "SCORE: " + score;
+                var score = 0;
+
+                //按键控制蛇的方向
+                var btn1 = document.getElementById("btn1");
+                var btn2 = document.getElementById("btn2");
+                var btn3 = document.getElementById("btn3");
+                var btn4 = document.getElementById("btn4");
+                var stop = document.getElementById("stop");
+                var restart = document.getElementById("restart");
+
+                //创建矩形对象
+                function Rect(x, y, width, height, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.width = width;
+                    this.height = height;
+                    this.color = color;
+                }
+
+                //绘制矩形的方法
+                Rect.prototype.rDraw = function () {
+                    ctx.beginPath();
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    ctx.strokeRect(this.x, this.y, this.width, this.height);
+                }
+
+                //创建snake对象
+                function Snake() {
+                    //画蛇头
+                    this.head = new Rect(canvas.width / 2 - 20, canvas.height / 2 - 20, 20, 20, "red");
+                    //画蛇身
+                    this.body = new Array();
+
+                    var x = this.head.x - 20;
+                    var y = this.head.y;
+
+                    for (var i = 0; i < 3; i++) {
+                        var rect = new Rect(x, y, 20, 20, "black");
+                        this.body.push(rect);
+                        x -= 20;
+                    }
+                    this.direction = 2;
+                    old_dir = "R";
+                }
+
+                //绘制蛇的方法（包含蛇头蛇身）
+                Snake.prototype.sDraw = function () {
+                    //绘制蛇头
+                    this.head.rDraw();
+                    //绘制蛇身
+                    for (var i = 0; i < this.body.length; i++) {
+                        this.body[i].rDraw();
+                    }
+                }
+
+                var snake = new Snake();
+                snake.sDraw();
+                var food = randForFood();
+
+                //蛇移动的方法
+                Snake.prototype.move = function () {
+                    //加头
+                    var rect = new Rect(this.head.x, this.head.y, this.head.width, this.head.height, "black");
+                    this.body.splice(0, 0, rect);
+
+                    //去尾
+                    if (isEatFood == false) {
+                        this.body.pop();
+                    } else {
+                        isEatFood = false;
+                    }
+
+                    switch (this.direction) {
+                        case 0: {
+                            this.head.x -= this.head.width;
+                            old_dir = "L";
+                            break;
+                        }
+                        case 1: {
+                            this.head.y -= this.head.height;
+                            old_dir = "U";
+                            break;
+                        }
+                        case 2: {
+                            this.head.x += this.head.width;
+                            old_dir = "R";
+                            break;
+                        }
+                        case 3: {
+                            this.head.y += this.head.height;
+                            old_dir = "D";
+                            break;
+                        }
+                    }
+
+                    //判断蛇头与墙是否会碰撞
+                    if (this.head.x >= canvas.width || this.head.x < 0 || this.head.y >= canvas.height || this.head.y < 0) {
+                        clearInterval(timer);
+                        timer = null;
+                        alert("Game over:D");
+                        restart.onclick = function () {
+                            window.location.reload();
+                        }
+                    }
+
+                    //判断蛇头与蛇身是否重叠
+                    for (var i = 0; i < this.body.length; i++) {
+                        if (isRectHit(this.head, this.body[i])) {
+                            clearInterval(timer);
+                            timer = null;
+                            alert("Game over:D");
+                        }
+                    }
+                }
+
+                //动画效果
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    food.rDraw();
+                    snake.move();
+                    snake.sDraw();
+
+                    if (isRectHit(snake.head, food)) {
+                        isEatFood = true;
+                        food = randForFood();
+                        score += 1;
+                        scorez.innerHTML = "SCORE: " + score;
+                    }
+                }
+                var speed = 200;
+                timer = setInterval(animate, speed);
+
+                //碰撞检测
+                function isRectHit(rect1, rect2) {
+                    var minX1 = rect1.x;
+                    var minX2 = rect2.x;
+                    var minY1 = rect1.y;
+                    var minY2 = rect2.y;
+
+                    var maxX1 = rect1.x + rect1.width;
+                    var maxX2 = rect2.x + rect2.width;
+                    var maxY1 = rect1.y + rect1.height;
+                    var maxY2 = rect2.y + rect2.height;
+
+                    //判断矩形相交的最大/最小值
+                    var minX = Math.max(minX1, minX2);
+                    var minY = Math.max(minY1, minY2);
+                    var maxX = Math.min(maxX1, maxX2);
+                    var maxY = Math.min(maxY1, maxY2);
+
+                    if (minX < maxX && minY < maxY) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+                //随机食物
+                function randForFood() {
+                    var isInSnake = true;
+                    while (isInSnake) {
+
+                        var x = getRandInRange(0, (canvas.width - 40) / 40) * 40;
+                        var y = getRandInRange(0, (canvas.height - 40) / 40) * 40;
+                        //食物矩形
+                        var rect = new Rect(x, y, 20, 20, "green");
+
+                        //判断食物是否与蛇头重叠
+                        if (isRectHit(snake.head, rect)) {
+                            isInSnake = true;
+                            contiue;
+                        }
+
+                        isInSnake = false;
+
+
+                        //判断食物是否与蛇身重叠
+                        for (var i = 0; i < snake.body.length; i++) {
+                            if (isRectHit(snake.body[i], rect)) {
+                                isInSnake = true;
+                                break;
+                            }
+                        }
+                    }
+                    return rect;
+                }
+
+                //获取随机数的方法
+                function getRandInRange(min, max) {
+                    return Math.round(Math.random() * (max - min) + min);
+                }
+
+                //监听键盘事件
+                document.onkeydown = function (event) {
+                    var event = event || windw.event;
+                    // 37 Left（左箭头） 38 Up（上箭头   39 Right（右箭头  40 Down（下箭头）
+                    /*speed = 150;
+                    timer = setInterval(animate,speed);
+                    clearInterval(timer);*/
+                    switch (event.keyCode) {
+                        case 37: {
+                            if (old_dir != "R") {
+                                snake.direction = 0;
+                                break;
+                            }
+                            return false;
+                        }
+                        case 38: {
+                            if (old_dir != "D") {
+                                snake.direction = 1;
+                                break;
+                            }
+                            return false;
+                        }
+                        case 39: {
+                            if (old_dir != "L") {
+                                snake.direction = 2;
+                                break;
+                            }
+                            return false;
+                        }
+                        case 40: {
+                            if (old_dir != "U") {
+                                snake.direction = 3;
+                                break;
+                            }
+                            return false;
+                        }
+                    }
+                }
+                /*document.onkeypress = function(){
+                    var event = event || windw.event;
+                    if(event.keyCode == 37 || event.keyCode == 38 || event.keyCode == 39 || event.keyCode == 40){
+                        speed = 500;
+                    }
+                }*/
+                btn1.onclick = function () {
+                    if (old_dir != "D") {
+                        snake.direction = 1;
+                    }
+                    return false;
+                }
+                btn2.onclick = function () {
+                    if (old_dir != "U") {
+                        snake.direction = 3;
+                    }
+                    return false;
+                }
+                btn3.onclick = function () {
+                    if (old_dir != "R") {
+                        snake.direction = 0;
+                    }
+                    return false;
+                }
+                btn4.onclick = function () {
+                    if (old_dir != "L") {
+                        snake.direction = 2;
+                    }
+                    return false;
+                }
+                stop.onclick = function () {
+                    if (runing == "RUN") {
+                        clearInterval(timer);
+                        runing = "STOP";
+                    }
+                }
+                restart.onclick = function () {
+                    if (runing == "STOP") {
+                        timer = setInterval(animate, speed);
+                        runing = "RUN";
+                    }
+                }
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>
