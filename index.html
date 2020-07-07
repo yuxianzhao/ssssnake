@@ -77,9 +77,15 @@
             button {
                 width: 70px;
                 height: 70px;
-                border: 5px solid black;
-                border-radius: 15px;
+                border-radius: 25px;
                 outline: none;
+                box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1),
+                    4px 4px 10px -8px rgba(0, 0, 0, .3);
+            }
+
+            button:active {
+                box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1) inset,
+                    4px 4px 10px -8px rgba(0, 0, 0, .3) inset;
             }
 
             #btn1,
@@ -89,7 +95,7 @@
 
             #btn3,
             #btn4 {
-                margin: 8px;
+                margin: 5px;
                 margin-left: 35px;
                 margin-right: 35px;
             }
@@ -117,8 +123,8 @@
             if (canvas.getContext) {
                 var ctx = canvas.getContext("2d");
                 var isEatFood = false;
-                var timer;      //定时器
-                var old_dir;    //定义一个代表原方向的变量，当开关发生变化，原方向跟着变化，然后进行检测，如果原方向与新方向相同，就返回false
+                var timer; //定时器
+                var old_dir; //定义一个代表原方向的变量，当开关发生变化，原方向跟着变化，然后进行检测，如果原方向与新方向相同，就返回false
                 var runing = "RUN";
 
                 //分数
@@ -222,7 +228,8 @@
                     }
 
                     //判断蛇头与墙是否会碰撞
-                    if (this.head.x >= canvas.width || this.head.x < 0 || this.head.y >= canvas.height || this.head.y < 0) {
+                    if (this.head.x >= canvas.width || this.head.x < 0 || this.head.y >= canvas.height || this.head
+                        .y < 0) {
                         clearInterval(timer);
                         timer = null;
                         alert("Game over:D");
